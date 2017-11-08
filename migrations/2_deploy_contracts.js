@@ -1,5 +1,5 @@
-var StoreFront = artifacts.require("./ConvertLib.sol");
+var StoreFront = artifacts.require('./StoreFront.sol');
 
-module.exports = function (deployer) {
+module.exports = function(deployer) {
   deployer.deploy(StoreFront);
 };
