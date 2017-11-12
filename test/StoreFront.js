@@ -1,5 +1,4 @@
 var StoreFront = artifacts.require('./StoreFront.sol');
-var eventUtil = require('../eventUtil');
 import expectThrow from '../zeppelin-helpers/expectThrow';
 
 function bytesToString(input) {
@@ -64,7 +63,7 @@ contract('StoreFront', accounts => {
       'withdraw event should indicate Sarah withdrew 500 wei'
     );
 
-    userInfo = await contract.getInfo(accountB).toString();
+    userInfo = await contract.getInfo(accountB);
     assert.equal(
       userInfo[1].toString(),
       '0',
