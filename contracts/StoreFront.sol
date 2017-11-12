@@ -9,7 +9,6 @@ contract StoreFront {
         bytes32 name;
         uint price;
         uint quantity;
-        bool initialized;
     }
     struct User {
         bytes32 name;
@@ -27,7 +26,6 @@ contract StoreFront {
     event LogAddUser(address indexed userAddress, bytes32 indexed name, uint balance);
     event LogAddProduct(address indexed productOwner, uint indexed id, uint price, uint quantity);
     event LogAddStock(address indexed adminAddress, uint indexed id, uint quantity);
-    event LogUserInfo(bytes32 indexed name, uint balance, bool administrationAccess, bool initialized);
     event LogDeposit(address indexed userAddress, uint amount);
     event LogWithdraw(address indexed userAddress, uint amount);
     event LogPurchase(uint indexed id, address indexed userAddress, uint quantity);
@@ -67,21 +65,21 @@ contract StoreFront {
     }
     
     function addProduct(uint id, bytes32 name, uint price, uint quantity) isAdministrator() public returns (bool) {
-        require(!products[id].initialized);
+        require(products[id].price == 0);
         LogAddProduct(msg.sender, id, price, quantity);
         productIds.push(id);
-        products[id] = Product(msg.sender, name, price, quantity, true);
+        products[id] = Product(msg.sender, name, price, quantity);
         return true;
     }
     
     function addStock(uint id, uint quantity) isAdministrator() public {
-        require(products[id].initialized);
+        require(products[id].price > 0);
         LogAddStock(msg.sender, id, quantity);
         products[id].quantity = products[id].quantity.add(quantity);
     }
     
     function purchase(uint id, uint quantity) isUser() public payable returns (bool) {
-        require(products[id].initialized && products[id].quantity >= quantity);
+        require(products[id].price > 0 && products[id].quantity >= quantity);
         //if the user sends ether with their purchase, deposit it first
         if(msg.value > 0) {
             deposit();
@@ -96,10 +94,10 @@ contract StoreFront {
         users[msg.sender].balance = users[msg.sender].balance.sub((quantity * products[id].price));
         products[id].quantity = products[id].quantity.sub(quantity);
 
-        if (users[msg.sender].shoppingBasket[id].initialized) {
+        if (users[msg.sender].shoppingBasket[id].price > 0) {
             users[msg.sender].shoppingBasket[id].quantity = users[msg.sender].shoppingBasket[id].quantity.add(quantity);
         } else {
-            users[msg.sender].shoppingBasket[id] = Product(msg.sender, products[id].name, products[id].price, quantity, true);
+            users[msg.sender].shoppingBasket[id] = Product(msg.sender, products[id].name, products[id].price, quantity);
         }
         return true;
     }
@@ -122,7 +120,7 @@ contract StoreFront {
     }
 
     function getProduct(uint id) public constant returns (bytes32, address, uint, uint) {
-        if(!products[id].initialized) {
+        if(products[id].price == 0) {
             return;
         }
         return (products[id].name, products[id].owner, products[id].price, products[id].quantity);
