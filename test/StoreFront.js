@@ -58,8 +58,8 @@ contract('StoreFront', accounts => {
 
     txObj = await contract.withdraw({ from: accountB });
     assert.equal(
-      txObj.logs[0].args.amount.toString(),
-      '505',
+      txObj.logs[0].args.amount,
+      505,
       'withdraw event should indicate Sarah withdrew 500 wei'
     );
 
