@@ -1,11 +1,6 @@
 var StoreFront = artifacts.require('./StoreFront.sol');
 import expectThrow from '../zeppelin-helpers/expectThrow';
 
-function bytesToString(input) {
-  let output = web3.toHex(input);
-  return web3.toUtf8(output);
-}
-
 contract('StoreFront', accounts => {
   const contractOwner = accounts[0];
   const accountA = accounts[1];
@@ -35,7 +30,7 @@ contract('StoreFront', accounts => {
 
     let productObj = await contract.getProduct(123);
     assert.equal(
-      bytesToString(productObj[0]),
+      web3.toUtf8(productObj[0]),
       'UFO Llama Cat T-shirt',
       'product id 123 should map to UFO Llama Cat T-shirt'
     );
