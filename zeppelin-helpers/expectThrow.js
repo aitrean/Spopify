@@ -12,10 +12,9 @@ export default async promise => {
     const outOfGas = error.message.search('out of gas') >= 0;
     assert(
       invalidOpcode || outOfGas,
-      "Expected throw, got '" + error + "' instead",
+      "Expected throw, got '" + error + "' instead"
     );
     return;
   }
   assert.fail('Expected throw not received');
 };
-
