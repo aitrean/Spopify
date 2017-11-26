@@ -1,13 +1,11 @@
 /* PAGE */
 
 body,
-.pure-g [class*='pure-u'] {
+.pure-g [class*=pure-u] {
   font-family: 'Open Sans', sans-serif;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
 }
 
@@ -32,7 +30,7 @@ code {
   background-color: #233e5e;
 }
 
-.pure-form input[type='text']:focus {
+.pure-form input[type="text"]:focus {
   border-color: #0c1a2b;
 }
 
@@ -41,7 +39,7 @@ code {
 .navbar {
   position: fixed;
   padding: 5px;
-  background: #96bf48;
+  background: #0c1a2b;
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
 }
 

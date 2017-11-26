@@ -115,8 +115,8 @@ contract StoreFront {
         users[msg.sender].balance = users[msg.sender].balance.add(msg.value);
     }
 
-    function getInfo(address userAddress) public constant returns (bytes32, uint) {
-        return (users[userAddress].name, users[userAddress].balance);
+    function getInfo(address userAddress) public constant returns (bytes32, uint, bool) {
+        return (users[userAddress].name, users[userAddress].balance, users[userAddress].administrationAccess);
     }
 
     function getProduct(uint id) public constant returns (bytes32, address, uint, uint) {
