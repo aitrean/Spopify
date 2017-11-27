@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import StoreFront from '../build/contracts/StoreFront.json';
-import Web3 from 'web3';
-import getWeb3 from './utils/getWeb3';
-import contract from 'truffle-contract';
 
 import './css/oswald.css';
 import './css/open-sans.css';
@@ -42,8 +38,10 @@ class AccountMenu extends Component {
     this.props.contract.getInfo(this.state.currentAccount).then(txObj => {
       if (txObj[2]) {
         this.setState({ administratorPrivilege: true, storeAccess: true });
-      } else if (txObj[0] !== 0) {
-        console.log('THIS USER WAS INITIALIZED');
+      } else if (
+        txObj[0] !==
+        '0x0000000000000000000000000000000000000000000000000000000000000000'
+      ) {
         this.setState({ storeAccess: true });
       }
     });
