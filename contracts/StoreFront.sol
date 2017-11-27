@@ -17,7 +17,8 @@ contract StoreFront {
         bool initialized;
         mapping(uint=>Product) shoppingBasket;
     }
-    address owner;
+    string public ownerr = "old man joe";
+    address public owner;
     uint[] public productIds;
     mapping(address=>User) users;
     mapping(uint=>Product) products;
@@ -46,7 +47,7 @@ contract StoreFront {
     }
     
     function StoreFront() public {
-        owner = msg.sender;
+       owner = msg.sender;
     }
 
     function promoteToAdmin(address administratorAddress) isOwner() public returns (bool) {
@@ -115,7 +116,7 @@ contract StoreFront {
         users[msg.sender].balance = users[msg.sender].balance.add(msg.value);
     }
 
-    function getInfo(address userAddress) public constant returns (bytes32, uint, bool) {
+    function getInfo(address userAddress) public constant returns (bytes32 name, uint balance, bool administrationAccess) {
         return (users[userAddress].name, users[userAddress].balance, users[userAddress].administrationAccess);
     }
 

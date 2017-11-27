@@ -9,7 +9,7 @@ contract('StoreFront', accounts => {
   beforeEach(() => {
     return StoreFront.new({ from: contractOwner })
       .then(instance => (contract = instance))
-      .then(() => contract.addUser('Bob', { from: accountA }))
+      .then(() => contract.addUser('Bob', { from: accountA, value: 0 }))
       .then(() => contract.addUser('Sarah', { from: accountB, value: 5 }))
       .then(() => {
         contract.promoteToAdmin(accountA);
