@@ -20,7 +20,7 @@ function composeWeb3() {
     })
     .catch(() => {
       console.log('Error finding web3.');
-    });
+    }); 
 }
 
 function getNetworkAccounts(web3) {
